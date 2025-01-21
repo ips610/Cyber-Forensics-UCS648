@@ -1,0 +1,67 @@
+file carving - magic numbers - signatures 
+
+it looks into those special bytes stored in that cluster/sector - we will search for some special magic numbers and will search for headers and footers and will be special to the type of data is being stored there .. 
+
+meta data of file -> we will be able to retrieve the data .. 
+https://en.wikipedia.org/wiki/List_of_file_signatures
+
+https://www.garykessler.net/library/file_sigs.html
+
+scalpel 
+
+cd /etc/scalpel
+edit the scalpel.conf with the help of nano and put more file signatures or enable/disable file signature
+
+little endian -> arithmetic operations are easy and memory accessing is easy
+
+always create an empty directory before running this tool
+sudo scalpel -c /etc/scalpel/scalpel.conf -o ~/scalout pd_image1.dd
+
+magic bytes are unique whole over the world
+we won’t be able to carve the meta data from this tool
+
+sudo feh 0000* -> command to see the images from terminal (binary to images) -> it will show small small thumbnails :)
+
+what thing run in the backend in scalpel tool to retrieve the data and magic bytes
+we need to know how to read the file -> file handling steps .. we can use C program to read the file .. we need read, write functions in OS .. 
+we need a file pointer to point to a particular file .. 
+
+
+similar to scalpel we have foremost
+sudo apt-get install foremost 
+
+not much difference between foremost and scalpel
+
+find the foremost.conf -> /etc/ -> foremost.conf
+
+sudo nano foremost.conf 
+it will be similar to scalpel.conf
+
+foremost can’t work larger files of greater than 4GB
+suitable for small disks
+
+xdg-open xyz.pdf
+feh filename.jpg
+
+libreoffice to open .doc, .ppt file etc
+
+
+
+
+scalpel is written over foremost
+scalpel can work with larger files with upto 16EB
+
+sudo foremost -t jpg -i pd_image1.dd -o ~/foremost_out
+
+
+sudo apt-get install recoverjpeg -> to extract images(jpeg)
+
+
+bulk-extracter -> it also looks for the system image .. 
+sudo apt-get install bulk-extractor
+
+sudo bulk_extractor -o bulkout pd_image.dd
+it gives output in text files
+
+
+magic rescue tool
