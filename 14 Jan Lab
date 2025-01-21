@@ -1,0 +1,76 @@
+sudo fdisk -l -> it will list all the available disks connected to the device
+sudo fdisk -x
+c/h/s -> cylinder/head/sector 
+sudo sfdisk -h
+
+sudo md5sum /dev/sda1
+
+dc3dd - more better options than dd .. it is apatch written over dd .. dd with more options … developed in US .. by department of defence … https://www.dc3.mil/Products/DC3-Validations
+
+dcfldd - by dcfl lab .. included in newer language or we can install it too
+
+dc3dd and dcfldd are similar in options
+
+
+
+dd - disk duplicator .. by default available in all linux distros .. copy from one file to another bit by bit
+
+
+31050db30ab4a59c4b98b600b1a512a7  /dev/sda1
+
+sudo dc3dd if=/dev/sda1 of=path_to_store_the_image log=path_of_log_file hash=md5 ofsiz=25M ofs=pd_image.000
+
+ofsiz -> offset size to split the image into parts
+ofs -> offset image file name start
+
+cat pd_image.* | dc3dd of=combined.dd
+
+sudo dc3dd if=/dev/sda1 of=path_to_store_the_image log=path_of_log_file hash=md5 ofsiz=25M hofs=pd_image.000 
+
+hofs -> hash the each output file
+
+sudo dcfldd wipe=/dev/sdk
+sudo dc3dd wipe=/dev/sdk pat=
+to wipe the device so that data between the cases donot clash with each other
+
+
+error logs can be created in dcfldd not in dc3dd
+
+to see the hexadecimal pattern of disk
+xxd pd_image.001 | more
+hexdump pd_image.001 | more
+
+mz -> signature of .exe
+55aa -> signature of boot sector
+
+
+sudo dd if=/dev/sda1 of=pd_imag3.dd
+but it won’t tell what is running in the background
+
+
+
+How to take out first sector from the device
+sudo dd if=/dev/sda1 of=mbr bs=512 count=1
+bs=512 it is default sector that we extracted by running fdisk
+
+count -> no of blocks
+limit -> how many bytes of this type
+
+
+mbr = master boot record .. it will help to load the OS in the ram 
+it will scan the partition table so it will get to know that it has mbr in it
+
+attribute = 80 .. it will tell that partition is bootable or not .. when we will do fdisk and last column will be attributes and boot column will have ‘*’ which will indicate that the partition / device is bootable
+
+
+volume boot record
+Disk /dev/sdb -> mbr
+
+Device
+/dev/sdb1 -> vbr
+
+so each partition will have one volume boot record .. so if you increase one partition so total no of 55aa signature will increase to 3 
+
+so by default each device will have atleast mbr + vbr (total 2 in number)
+
+seek command to jump any particular sector -> check this command how to use
