@@ -1,0 +1,72 @@
+sudo bulk_extractor -o bulkout inputimagefile
+grep “xxx@gmail.com” email.txt
+
+u can aslo use only name of person instead of email
+
+
+sudo apt-get install magicrescue
+cd /usr/share/magicrescue/recipes
+ls
+
+particularly used to extract the data from memory sticks that go into camera
+$1 - from where it got the main file 
+$2 - actual location to store in the folder
+
+sudo magicrescue -r jpeg-exif -d ~/magicout pd_image1.dd
+
+how to remotely do imaging from one place to other 
+windows+r -> services.msc
+check if open ssh server installed
+if open ssh authentication agent is enabled then disable it to install the open ssh agent
+
+to install open ssh client and server 
+go to settings -> system -> optional features -> search for open ssh server and then install it
+if you can’t found it here then install it manually
+go to powershell and then install it manually
+
+windows powershell ise in admin mode
+
+Add-windowsCapability -online -Name OpenSSH.Server
+this will install server in admin mode
+
+to start the ssh server
+start from services.msc or go to powershell ise
+net start sshd
+
+disable the firewall in imaging machine 
+netstat -na
+
+how to install the firewall runle
+Get-NetFirewallRule -> in ise powershell :: to list down all the firewall rules enabled in theat system 
+then search for openssh
+if you don’t see openssh rule then execute the following command
+
+New-NetFirewallRule -Name sshd -DisplayName ‘OpenSSH SERVER (SSHD)’ -Enabled True -Direction  Inbound -Protocol TCP -Action Allow -LocalPort 22
+
+
+
+
+start the service in remote pc 
+ssh username@remotepc_ip
+ssh Admin@172.16.119.64
+
+wmic diskdrive list brief -> to get the list of devices attached to the investiagation pc
+F:
+dir
+cd dd
+dir
+u will find the dd.exe in the pendrive present
+dd —list
+dd if=\\.\PHYSICALDRIVE0 of=C:\image1.dd —progress
+exit
+scp Admin@172.16.119.64:C:/image1.dd .
+then it will copy the data from remote machine to here in the investigating team
+
+sudo apt-get install gddrescue
+if dd encounters bad sector then it stops there 
+dc3dd will skip that bad sector
+but above tool is meant for badsectors and faulty device .. it give retries to that bad sector to try try and try to get something out of that
+ddrescue —help
+sudo ddrescue -r3 /dev/sdb image1.dd
+
+
