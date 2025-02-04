@@ -1,0 +1,58 @@
+sudo apt-get install sleuthkit
+sleuthkit is composition of many binaries and that can be used to extract the files from image file
+
+img_stat - will give info about this file
+img_stat pd_image.dd
+img_stat -i list -> to see the supported image files
+
+mmstat -i list -> gives information abt memory
+mmstat pd_image.dd
+> dos .. it shows that the image file have been partitioned by dos table
+mmstat -t list -> it will show how the disk file have been partitioned
+
+partition table is residing in first sector of boot  .. 
+How will you extract first sector of boot
+sudo dd if=pd_image2.dd of=mbr bs=512 count=1
+
+xxd mbr -> hexdump of mbr that we have extracted above
+dos have limitation of 4 physical partition
+sudo fdisk -l
+in partition table entry format
+0 -> bootable flag (80 -> bootable else 0)
+1-3 -> starting chs (cylinder head sector)
+4 -> partition type
+5-7 -> ending chs address
+8-11 -> lba (logical block address) -> this is in little endian order .. so read it reverse
+12-15 -> size in sectors
+
+mmls -> list partition table entries offset
+mmls pd_image2.dd
+
+fsstat -o 8064 pd_image2.dd | less -> give more infor abt file system
+here 8064 is the offset that we have found from the partition table
+
+8192-8199 (8) -> 3153920 it means the file is fragmented and is stored at 3153920 sector
+8200-8303 (104) -> EOF it means file is not fragmented and is completely stored here
+
+fat stores the meta data info with data part 
+
+fls -o 8064 pd_image2.dd
+it will give all the meta data of files stored here in this image file
+
+d/d -> directory
+r/r -> regular file
+v/v -> some special files (fat1, fat2, mbr)
+
+r/r 3: here 3 is inode (no given to cluster { collection of sectors [majorly 8 sectors in the cluster]} and here inode is diff from os)
+
+r/r * 123: here * means that this particular data has been deleted from this image file
+
+icat -> to recover individual file from image file
+icat -o 8064 pd_image2.dd 50331742 > comments3.docx
+libreoffice
+tsk_recover -> copy all the content from image file and will bring to you
+tsk_recover -h
+tsk_recover -o 8064 -e pd_image2.dd ~/output
+
+
+we can do imaging of image file also
