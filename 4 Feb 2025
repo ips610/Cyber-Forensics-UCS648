@@ -61,3 +61,5 @@ we can do imaging of image file also
 
 
 Sleuth kit is a tool and in which we have binaries like tsk_recover, icat
+
+tsk_recover will recover all the files .. and icat can recover specific file also
