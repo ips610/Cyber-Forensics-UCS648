@@ -56,3 +56,8 @@ tsk_recover -o 8064 -e pd_image2.dd ~/output
 
 
 we can do imaging of image file also
+
+
+
+
+Sleuth kit is a tool and in which we have binaries like tsk_recover, icat
