@@ -1,0 +1,60 @@
+sudo apt-get install testdisk
+testdisk & sleuthkit are both file system based
+rest are not filesystem based
+
+winhex is a signature based tool (hexeditor)
+
+it is not necessary that only data is deleted .. there can be option that partition is deleted .. so to recover data through that deleted partition
+
+different types of partition
+primary partition — 
+extended partition —
+logical partition —
+delted partition —
+
+disk can be physically divided into chunks called partition (primary) .. when done physically .. it have max limit .. and depends on file system in that drive .. DOS file system — 4 partition
+GPT file system — >4 (128 physical partition)
+
+so DOS introduced logical 
+particular physical partition labelled as extended .. and that extended can be divided into logical further partition .. and extended can be divided into any no of logical partition
+
+sudo testdisk
+> it will ask for log file to create a file or to append in previously created log file
+DOS partitioning scheme - Intel
+
+then analyse — to detect and find out the lost partition
+then it will list all the partition of the files
+P, L, E, D … P - Primary, L - Logical, E - Extended, D — Deleted
+
+it will check the master boot record and then will tell the partition file system use
+also along with this it will tell no of sectors per track, mismatches, head/cylinder, chs, echs
+
+it is getting all the information from partition table
+partition table is stored in MBR
+if the Master boot record (MBR) is corrupt .. so it is difficult 
+
+so testdisk have facility .. it can create its own MBR of that device if the mbr is corrupted
+
+
+see the files of that partition
+go to undelete option .. then u can see the files .. if the file color is red .. then it means it is deleted file
+
+BIOS parameter record — it contains lot of info for a file .. and it has one byte which show that weather the file is deleted or not 
+
+then choose the address
+
+
+sudo testdisk pd_image2.dd — to use the above tool on an image file
+
+
+
+for windows tool name is photorec .. on linux it is testdisk
+
+testdisk can be used to create the image of the device also
+
+
+
+winhex .. it will help to see the raw bytes
+all exxecutables are called elf .. as they link themselves with binaries and dlls
+
+we get malware in the form of elf .. 
