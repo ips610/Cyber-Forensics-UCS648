@@ -1,0 +1,88 @@
+RAM Imaging Tool - Volatile Memory -
+volatility foundation 
+
+for windows the video is available on drive folder and one ram image is available on lms that is infected with malware - cridex.vmem
+
+in this doc how to do volatility in linux
+https://github.com/volatilityfoundation/volatility -> clone this
+or https://volatilityfoundation.org .. we will use v2.6 not v3
+
+
+these tools can be used to image the ram
+lime toolbox
+ftk imager
+ram capture
+
+
+volatility is composed of lot of pugins
+python2 vol.py --info
+
+python2 vol.py -f <location of ram memory image file> imageinfo
+this will give the memory image
+
+python2 vol.py -f <location> —profile=WinXPSP2x86 pslist
+it will show the urnning processes when the dump was taken
+
+System Represent the kernel process - first process that runs
+smss.exe - system manager sub system
+
+EPROCESS structure 
+active process links 
+
+pslist scanned all the EPROCESS structures of memory 
+
+malwares/rootkits will detach themselves from active process links and get resided in memory so that they can’t be detected
+
+python2 vol.py -f <location> —profile=WinXPSP2x86 psscan
+to check if any one have detached from active links or not
+
+python2 vol.py -f <location> —profile=WinXPSP2x86 pstree
+to get parent child relationship in form of tree
+
+python2 vol.py -f <location> —profile=WinXPSP2x86 psxview
+process enumeration plugins - searching for details of the process
+here look for the False processes
+
+python2 vol.py -f <location> —profile=WinXPSP2x86 connscan
+will look for active connections for the processes that it is making
+
+python2 vol.py -f <location> —profile=WinXPSP2x86 sockets
+to get deep down details in network
+
+python2 vol.py -f <location> —profile=WinXPSP2x86 cmdline
+to see if any command is using the terminal or not
+
+after this every pugin will run on process id
+python2 vol.py -f <location> —profile=WinXPSP2x86 procdump -p <pid> -D <folder>
+folder should already be created 
+
+then compute the md5sum hash
+then go to virus total / mxtoolbox -> blacklist and check if that it is malicious or not
+
+there is another way to take the dump of process also
+python2 vol.py -f <location> —profile=WinXPSP2x86 procdump -p 1640 —dir rest check the command in the ppt
+
+python2 ./vol.py -f ~/Desktop/cridex.vmem --profile=WinXPSP2x86 memdump -p 1640 --dump-dir .
+to take the memory dump of the process
+
+commit charge - no of pages it has taken
+memcommit - no of pages that it has comited in. memory
+
+vads - virtual adress space protection
+
+private memory - no shared memory 
+
+protection - check it
+
+dtb - use to map the pages in memory and pages
+
+
+
+python2 ./vol.py -f ~/Desktop/cridex.vmem --profile=WinXPSP2x86 printkey -K "Software\Microsoft\Windows\CurrentVersion\Run"
+above command will tell which programs will load when the system will run
+it will have key - value pairs 
+
+u will see one process is running as soon as the system is turned on and we have path of that file too 
+
+
+regit - to see the registries in windows
