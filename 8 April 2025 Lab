@@ -1,0 +1,125 @@
+stegnography
+
+how we can suspect
+file command - it will tell what type of file it is irrespective of extension
+eg. file hello.sys
+exiftool command - similar to above but detailed
+eg. exiftool hello.sys
+
+hiding in plane view
+
+echo “hello students” > .hidden -> this is hidden file
+for this we need to use ls -a
+
+ntfs - alternate data stream - save the folks inside other file meaning storing child files in parent file
+setting attributes in linux - similar to alternate data stream but not same
+
+
+
+alternate data stream demo in windows
+D:\> echo this is a secret > secret.txt
+dir *.txt -> file will be of 19 bytes lets say
+notepad secret.txt:catchme.txt
+
+notepad will open click on yes
+and write the text here and save
+
+dir *.txt -> still same 19 bytes
+type secret.txt -> this is a secret 
+
+how to check that hidden file
+
+dir /R -> it will recursively find the alternate files
+
+
+go to google and search -> sysinternals -> streams tool — help to manage these alternate streams
+
+
+download and extract it
+
+run this command in cmd then > streams.exe secret.txt
+
+
+
+
+now open powershell ise
+
+go to D drive
+
+D:\> Get-Content .\secret.txt -Stream catchme.txt | Set-Content extracted.txt
+dir *.txt
+
+type extracted.txt -> this will show the text of that file
+
+
+
+
+
+now back to linux
+
+nano prog.c
+
+#include <stdio.h>
+
+int main(){
+	printf(“Password=1234, this is a secret”);
+	int a=5, b=5;
+	printf(“\nsum=%d”, a+b);
+}
+
+
+gcc -g prog.c -o prog.exe
+
+hello.sys is jpg image file but we have changed the extension 
+cat hello.sys prog.exe > image.jpg
+
+feh image.jpg
+file image.jpg
+exif image.jpg
+
+sudo apt install binwalk -> tool to find this type of data
+
+file prog.exe -> ELF (Executable linkable format)
+xxd prog.exe | less -> 7f45 (elf file format)
+
+
+binwalk -e image.jpg
+binwalk —dd “.*” image.jpg -> it will extract all the files that are hidden in this image file
+cd _image.jpg.extracted
+ls -> it will list out the memory sector no
+
+chmod +x 72A -> here 72A is address of that executable
+
+./72A
+
+msg will be printed
+mv 72A mal.exe
+gdb ./mal.exe
+
+list -> now it will show the source code of that program
+q
+
+strings ./mal.exe
+
+put break points and and dissect the program
+
+ 
+
+
+sudo apt install steghide
+
+echo “this is secret msg” > secret.txt
+steghide embed -cf pen.jpeg -ef  secret.txt
+then it will ask to enter the passphrase
+-cf means cover file .. means the parent file
+-ef means embedded file 
+
+
+steghide -sf pen.jpeg
+-sf means stego file
+and then enter the passphrase to open the steg file that u have generated above
+
+gitra tool
+
+strip exe name 
+strip prog1.exe -> it will generate the stripped file no debugging symbols and all
