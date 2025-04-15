@@ -1,0 +1,24 @@
+Malware Analysis
+
+Static -> Don’t run just analyze it with the help of various softwares and tools
+Dynamic -> Actual running of malware in the sandbox
+
+ELF file is divided into 2 parts - Program header table, Section header table and data
+
+stripping & non stripping
+
+strip prog1.exe
+
+
+UPX - packing and unpacking software - used by malwares to obfuscating the code
+
+https://github.com/limiteci/WannaCry
+donot work in NAT
+pestudio, peview, pecheck, lordpe, exeinfo
+
+entropy - degree of randomness
+
+do xxd to see the compressed file 
+
+overlay - part of program which come and go out of memory frequently
+
